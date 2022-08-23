@@ -1,0 +1,20 @@
+{
+  "company": [
+    {
+      "id": 0,
+      "name": "Robinhood",
+      "web": "https://robinhood.com/us/en/",
+      "year-founded": "2013",
+      "addresses": [
+        {
+          "addressid": "0",
+          "number": "",
+          "line1": "",
+          "city": "",
+          "postcode": "",
+          "country": ""
+        }
+      ]
+    }
+  ]
+}
