@@ -11,6 +11,7 @@ const searchWebsite = [
     name: "builtin",
     url: "https://builtin.com/fintech/fintech-companies-startups-to-know",
     html_attr: ".info .title a",
+    html_title: "",
     html_url: "",
   },
   //   {
@@ -24,6 +25,7 @@ const searchWebsite = [
     name: "explodingtopics",
     url: "https://explodingtopics.com/blog/fintech-startups",
     html_attr: ".paragraph h3",
+    html_title: "split",
     html_url: "p a",
   },
 ];
@@ -35,7 +37,10 @@ searchWebsite.forEach((website) => {
     const html = response.data;
     const $ = cheerio.load(html);
     $(website.html_attr).each(function () {
-      const title = $(this).text();
+      const title =
+        website.html_title !== ""
+          ? $(this).text().split(" ")[1]
+          : $(this).text();
       const url =
         website.html_url !== ""
           ? $(this)
@@ -52,6 +57,7 @@ searchWebsite.forEach((website) => {
       companies.push({
         title,
         url,
+        source: website.name,
       });
     });
   });
@@ -64,5 +70,21 @@ app.get("/", (req, res) => {
 app.get("/company", (req, res) => {
   res.json(companies);
 });
+
+// app.get("/company/:websiteId", async (req, res) => {
+//   const websiteId = req.params.websiteId;
+
+//   const websiteUrl = searchWebsite.filter(
+//     (website) => website.name === websiteId
+//   )[0].url;
+
+//     axios.get(websiteUrl).then(response => {
+//         const html = response.data
+//         const $ = cheerio.load(html)
+
+//         const specificCompany = []
+
+//     })
+// });
 
 app.listen(PORT, () => console.log(`server running on PORT ${PORT}`));
